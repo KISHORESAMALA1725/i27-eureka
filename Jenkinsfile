@@ -27,7 +27,7 @@ pipeline {
                  archive 'target/*.jar'
              }
           }
-        stage ('SonarQube'){
+        stage ('sonarqube'){
            steps {
                //COde Quality needs to be implemented in this stage
                //Before we execute or write the code, make suer sonarqube-sanner plugin is installed 
