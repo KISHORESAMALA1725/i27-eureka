@@ -33,7 +33,7 @@ pipeline {
                //Before we execute or write the code, make suer sonarqube-sanner plugin is installed 
                // sonar detaails are been configured in the manage jenkins > system
                echo "*******Starting Sonar Scans with Quality Gates*********"
-               withSonarQubeEnv('SonarQube') {// SonarQube is the name we configured in Manage Jenkins > system > Sonarqube , it hsould match exactly
+               withSonarQubeEnv('sonarqube') {// SonarQube is the name we configured in Manage Jenkins > system > Sonarqube , it hsould match exactly
                    sh """
                       mvn sonar:sonar \
                         -Dsonar.projectKey=i27-eureka \
