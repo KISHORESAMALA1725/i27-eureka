@@ -1,3 +1,5 @@
+// Thsi Jenkins file is for Eureka Deployment
+
 pipeline {
      agent {
           label 'k8s-slave'
@@ -73,7 +75,7 @@ pipeline {
         stage ('Deploy to Dev-env') {
             steps{            
                 echo "********* Deploying to dev Environment **************"
-                withCredentials([usernamePassword(credentialsId: 'john_docker_vm_passwd', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: 'john_docker_vm_pwd', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         script {
                             try {
                                 // Stop the container
@@ -92,3 +94,4 @@ pipeline {
            }
        }
    }
+    
