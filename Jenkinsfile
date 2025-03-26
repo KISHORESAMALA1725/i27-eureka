@@ -4,8 +4,6 @@ pipeline {
      agent {
           label 'k8s-slave'
      }
-
-     // tools configured in jenkins-master
      tools {
         maven 'Maven-3.8.8'
         jdk 'JDK-17'
@@ -29,9 +27,6 @@ pipeline {
         }
         stage ('sonarqube'){
            steps {
-               //COde Quality needs to be implemented in this stage
-               //Before we execute or write the code, make suer sonarqube-sanner plugin is installed 
-               // sonar detaails are been configured in the manage jenkins > system
                echo "*******Starting Sonar Scans with Quality Gates*********"
                withSonarQubeEnv('sonarqube') {// SonarQube is the name we configured in Manage Jenkins > system > Sonarqube , it hsould match exactly
                    sh """
@@ -78,10 +73,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'john_docker_vm_pwd', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         script {
                             try {
-                                // Stop the container
                                 sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker stop ${env.APPLICATION_NAME}-dev \""
-
-                                // remove the container
                                 sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker rm ${env.APPLICATION_NAME}-dev \""
                             }
                             catch(err){
