@@ -9,7 +9,7 @@ pipeline {
         jdk 'JDK-17'
      }
      
-    parameters {
+     parameters {
         choice(name: 'scanOnly',
             choices: 'no\nyes',
             description: "This will scan the application"
