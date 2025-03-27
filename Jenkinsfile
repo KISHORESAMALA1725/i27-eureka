@@ -129,7 +129,7 @@ pipeline {
             }
             steps{  
                 script {
-                    dockerDeploy('dev','5761','8761').call()
+                    dockerDeploy('dev','2761','8761').call()
                 }          
 
              }  
@@ -193,8 +193,8 @@ def dockerDeploy(envDeploy,hostPort,contPort) {
                 withCredentials([usernamePassword(credentialsId: 'john_docker_vm_pwd', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         script {
                             try {
-                                sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker stop ${env.APPLICATION_NAME}-dev \""
-                                sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker rm ${env.APPLICATION_NAME}-dev \""
+                                sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker stop ${env.APPLICATION_NAME}-$envDeploy \""
+                                sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker rm ${env.APPLICATION_NAME}-$envDeploy \""
                             }
                             catch(err){
                                 echo "Error Caught: $err"
