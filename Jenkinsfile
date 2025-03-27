@@ -4,7 +4,7 @@ pipeline {
             stage ('Method Example') {
                 steps {
                     script {
-                        text(siva).call()
+                        text('siva').call()
                     }
                 }
             }
