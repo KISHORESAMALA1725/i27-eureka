@@ -11,31 +11,31 @@ pipeline {
      
      parameters {
         choice(name: 'scanOnly',
-            choices: 'no\nyes',
+            choices: 'no\n'yes'',
             description: "This will scan the application"
         )
         choice(name: 'buildOnly',
-            choices: 'no\nyes',
+            choices: 'no\n'yes'',
             description: 'This will Only build the application'
         )
         choice(name: 'dockerPush',
-            choices: 'no\nyes',
+            choices: 'no\n'yes'',
             description: 'This will trigger the app build, docker build and docker push'
         )
         choice(name: 'deployToDev',
-            choices: 'no\nyes',
+            choices: 'no\n'yes'',
             description: 'This will Deploy the application to Dev env'
         )
         choice(name: 'deployToTest',
-            choices: 'no\nyes',
+            choices: 'no\n'yes'',
             description: 'This will Deploy the application to Test env'
         )
         choice(name: 'deployToStage',
-            choices: 'no\nyes',
+            choices: 'no\n'yes'',
             description: 'This will Deploy the application to Stage env'
         )
         choice(name: 'deployToProd',
-            choices: 'no\nyes',
+            choices: 'no\n'yes'',
             description: 'This will Deploy the application to Prod env'
         )
     }         
@@ -52,8 +52,8 @@ pipeline {
             when {
                 anyOf {
                     expression {
-                        params.buildOnly == yes
-                        params.dockerPush == yes
+                        params.buildOnly == 'yes'
+                        params.dockerPush == 'yes'
                     }
                 }
             }
@@ -69,9 +69,9 @@ pipeline {
             when {
                 anyOf {
                     expression {
-                        params.scanOnly == yes
-                        params.buildOnly == yes
-                        params.dockerPush == yes
+                        params.scanOnly == 'yes'
+                        params.buildOnly == 'yes'
+                        params.dockerPush == 'yes'
                     }
                 }
             }
@@ -109,8 +109,8 @@ pipeline {
             when {
                 anyOf{
                     expression {
-                        params.buildOnly == yes
-                        params.dockerPush == yes                        
+                        params.buildOnly == 'yes'
+                        params.dockerPush == 'yes'                        
                     }
                 }
             }
@@ -124,7 +124,7 @@ pipeline {
         stage ('Deploy to Dev-env') {
             when {
                 expression  {
-                    params.deployToDev == yes
+                    params.deployToDev == 'yes'
                 }
             }
             steps{  
@@ -138,7 +138,7 @@ pipeline {
         stage ('Deploy to test-env') {
             when {
                 expression  {
-                    params.deployToTest == yes
+                    params.deployToTest == 'yes'
                 }
             }
             steps {
@@ -151,7 +151,7 @@ pipeline {
         stage ("Deploy to Stage-env") {
             when {
                 expression  {
-                    params.deployToStage == yes
+                    params.deployToStage == 'yes'
                 }
             }
             steps {
@@ -164,7 +164,7 @@ pipeline {
         stage ('Deploy to Prod-env') {
             when {
                 expression  {
-                    params.deployToProd == yes
+                    params.deployToProd == 'yes'
                 }
             }
             steps {
