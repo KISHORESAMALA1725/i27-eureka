@@ -25,6 +25,7 @@ pipeline {
                  archiveArtifacts 'target/*.jar'
              }
         }
+
         stage ('sonarqube'){
            steps {
                echo "*******Starting Sonar Scans with Quality Gates*********"
@@ -42,6 +43,7 @@ pipeline {
              
            }
         } 
+
         stage ('BuildFormat') {
             steps {
                script { 
@@ -54,13 +56,15 @@ pipeline {
                }
             }
         }
+
         stage('Docker build and push') {
             steps {
                 script {
                     dockerbuildandpush().call()                
                 }
             }
-        }
+        } 
+
         stage ('Deploy to Dev-env') {
             steps{  
                 script {
@@ -69,10 +73,34 @@ pipeline {
 
              }  
            }
-       }
-   }
+
+        stage ('Deploy to test-env') {
+            steps {
+                script {
+                    deploytodevenv('test','6761','8761').call()
+                }
+            }
+        }
+
+        stage ("Deploy to Stage-env") {
+            steps {
+                script {
+                    deploytodevenv('stage','7761','8761').call()
+                }
+            }
+        }  
+
+        stage ('Deploy to Prod-env') {
+            steps {
+                script {
+                    deploytodevenv('prod','5761','8761').call()
+                }
+            }
+        }
+    }
+}
     
-def dockerbuildandpush() {
+def dockerbuildpush() {
     return {
       echo "****** Building Docker image *******"
       sh "cp ${WORKSPACE}/target/i27-${env.APPLICATION_NAME}-${env.POM_VERSION}.${env.POM_PACKAGING} ./.cicd"
