@@ -64,7 +64,7 @@ pipeline {
         stage ('Deploy to Dev-env') {
             steps{  
                 script {
-                    deploytodevenv().call()
+                    deploytodevenv('dev','5761','8761').call()
                 }          
 
              }  
@@ -83,7 +83,7 @@ def dockerbuildandpush() {
     }
 }    
 
-def deploytodevenv() {
+def deploytodevenv(envDeploy,hostPort,contPort) {
     return {
                 echo "********* Deploying to dev Environment **************"
                 withCredentials([usernamePassword(credentialsId: 'john_docker_vm_pwd', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
@@ -95,7 +95,7 @@ def deploytodevenv() {
                             catch(err){
                                 echo "Error Caught: $err"
                             }
-                            sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker container run -dit -p  8761:8761 --name ${env.APPLICATION_NAME}-dev ${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${GIT_COMMIT} \""
+                            sh "sshpass -p '$PASSWORD' -v ssh -o StrictHostKeyChecking=no '$USERNAME'@$dev_ip \"docker container run -dit -p  $hostPort:$contPort --name ${env.APPLICATION_NAME}-$envDeploy ${env.DOCKER_HUB}/${env.APPLICATION_NAME}:${GIT_COMMIT} \""
                         }
                     }         
     }
