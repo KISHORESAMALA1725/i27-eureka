@@ -123,7 +123,7 @@ pipeline {
 
         stage ('Deploy to Dev-env') {
             when {
-                expression = {
+                expression  {
                     params.deployToDev == yes
                 }
             }
@@ -137,7 +137,7 @@ pipeline {
 
         stage ('Deploy to test-env') {
             when {
-                expression = {
+                expression  {
                     params.deployToTest == yes
                 }
             }
@@ -150,7 +150,7 @@ pipeline {
 
         stage ("Deploy to Stage-env") {
             when {
-                expression = {
+                expression  {
                     params.deployToStage == yes
                 }
             }
@@ -163,7 +163,7 @@ pipeline {
 
         stage ('Deploy to Prod-env') {
             when {
-                expression = {
+                expression  {
                     params.deployToProd == yes
                 }
             }
