@@ -1,16 +1,15 @@
 pipeline {
-    agent any {
+    agent any 
         stages {
             stage ('Method Example') {
                 steps {
                     script {
-                        sh "text(siva).call()"
+                        text(siva).call()
                     }
                 }
             }
         }
-    }
-}
+    }     
 
 def text(name) {
     return {
