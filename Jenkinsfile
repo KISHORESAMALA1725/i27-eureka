@@ -130,7 +130,7 @@ pipeline {
                     }
                     anyOf{
                         expression {
-                            branch = 'releease'
+                            branch = 'main'
                         }
                     }
                 }
