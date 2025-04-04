@@ -130,7 +130,7 @@ pipeline {
                     }
                     anyOf{
                         expression {
-                            branch = 'main'
+                            branch 'main'
                         }
                     }
                 }
